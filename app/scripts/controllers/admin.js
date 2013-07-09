@@ -10,15 +10,30 @@ angular.module('ProgrammerRPGApp')
     ];
     $scope.frames=[
                 [ 
-                    {actor:{style:'blah',type:'character'}},    
-                    {actor:{style:'blah',type:'textbox'}},    
-                    {actor:{style:'blah',type:'timer'}},
-                    {sound:'soundfile.midi'}    
+                    {style:"top:171px;left:257px;height:200px;width:300px;z-index:0;background:#d7103a;background-image:url('');",type:'character',id:'actor-0-1',contents:'Saved character'},    
+                    {style:"top:40px;left:417px;height:50px;width:300px;z-index:2;background:#22b159;background-image:url('');",type:'timer',id:'actor-1-2',contents:'Saved timer'},    
+                    {style:"top:426px;left:92px;height:200px;width:600px;z-index:0;background:#a94bc3;background-image:url('');",type:'textbox',id:'actor-2-3',contents:'Saved textbox'},
+                    {value:'soundfile.midi',type:'sound'}   
                 ]
                 ];
     $scope.actors=[];
     $scope.actor={};
 
+    $scope.getActors = function(){
+        angular.forEach($scope.frames, function(frame){
+            angular.forEach(frame,function(currentObj){
+                if(currentObj.type != 'sound'){
+                    var currentActor = {
+                        style:currentObj.style,
+                        id:currentObj.id,
+                        contents:currentObj.contents
+                    }
+                    $scope.actors.push(currentActor);
+                }
+            });
+        });
+    }
+    $scope.getActors();
     $scope.getProperties = function(currentActor){
         //When I click the actor
         //Grab me all the parts
@@ -29,6 +44,13 @@ angular.module('ProgrammerRPGApp')
         //Actor scope for new top/left not updated  force an update
         $scope.actor.top=$('#'+currentActor.id).css('top');
         $scope.actor.left=$('#'+currentActor.id).css('left');
+
+        //Ultra lazy parse, only if I click on it to edit do the work
+        $scope.actor.height=$('#'+currentActor.id).css('height');
+        $scope.actor.width=$('#'+currentActor.id).css('width');
+        $scope.actor.background=$('#'+currentActor.id).css('background-color');
+        $scope.actor.image=$('#'+currentActor.id).css('background-image');
+        $scope.actor.zindex=$('#'+currentActor.id).css('z-index');
 
         //$scope.$apply(); Drag event already fires apply..
         

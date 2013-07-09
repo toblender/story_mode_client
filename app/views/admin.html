@@ -64,7 +64,7 @@
                     <input type="text" ng-model="actor.zindex" placeholder="position"/>
                     <input type="text" ng-model="actor.background" placeholder="background" />
                     <input type="text" ng-model="actor.image" placeholder="bg-image"/>
-                    <input type="text" id="new-actor-value" value="top:{{actor.top}};left:{{actor.left}};height:{{actor.height}};width:{{actor.width}};z-index:{{actor.zindex}};background:{{actor.background}};background-image:url('{{actor.image}}');" />
+                    <input type="text" id="new-actor-value" value="top:{{actor.top}};left:{{actor.left}};height:{{actor.height}};width:{{actor.width}};z-index:{{actor.zindex}};background:{{actor.background}};background-image:{{actor.image | filterURL}};" />
                     <button ng-click="updateActor()" class="btn">Save changes</button>
                     <button ng-click="removeActor()" class="btn">Delete</button>
                 </div>
