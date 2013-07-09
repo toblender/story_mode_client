@@ -1,0 +1,68 @@
+<div class="row" id="admin-interface">
+    <div class="span2" id="scene-nav">Scene Navigation
+        <ul>
+            <li ng-repeat="scene in scenes">
+              <div class="btn-group">
+                  <a class="btn dropdown-toggle">
+                        <span><i class="icon-film"></i> Scene {{scene.number || 1}}</span>
+                        <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                        <li><a href="">Add Scene</a></li>
+                        <li><a href="">Duplicate Scene</a></li>
+                        <li><a href="">Delete Scene</a></li>
+                  </ul>
+              </div>
+            </li>
+        </ul>
+    </div>
+    <div class="span12" id="stage-area">Stage area
+        <div id="status-bar row">
+            <div class="span9">
+                <a class="btn"><i class="icon-download-alt"></i> Save</a>
+            </div>
+            <div class="span2">
+                <div class="btn-group">
+                  <a class="btn dropdown-toggle">
+                        <span><i class="icon-user"></i>UserName</span>
+                        <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                        <li>0 Points</li>
+                        <li>Last login: 12,12,2013</li>
+                        <li class="divider"></li>
+                        <li><a href="">Log out</a></li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row stage-container">
+            <div class="span10" id="stage">
+                <div class="well background" droppable>
+                    background
+                    <div class="actor" draggable ng-repeat="actor in actors" style="{{actor.style}}">
+                        {{actor.contents}}
+                    </div>
+                </div>
+            </div>
+            <div class="span2" id="widgets">
+                Properties
+                <div id="properties">
+                    
+                </div>
+                Tools
+                <div id="tools" class="tool-box">
+                    <div id="character" draggable class="pr-draggable">
+                        character
+                    </div>
+                    <div id="text-box" draggable class="pr-draggable">
+                        text-box
+                    </div>
+                    <div id="timer" draggable class="pr-draggable">
+                        Timer
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
