@@ -4,7 +4,7 @@
             <li ng-repeat="scene in scenes">
               <div class="btn-group">
                   <a class="btn dropdown-toggle">
-                        <span><i class="icon-film"></i> Scene {{scene.number || 1}}</span>
+                        <span><i class="icon-film"></i> Scene {{$index + 1 || 1}}</span>
                         <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
@@ -20,6 +20,14 @@
         <div id="status-bar row">
             <div class="span9">
                 <a class="btn"><i class="icon-download-alt"></i> Save</a>
+                <div id="frames">
+                    Frames
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <button class="btn" ng-repeat="frame in frames">{{$index + 1}}</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="span2">
                 <div class="btn-group">
@@ -40,15 +48,25 @@
             <div class="span10" id="stage">
                 <div class="well background" droppable>
                     background
-                    <div class="actor" draggable ng-repeat="actor in actors" style="{{actor.style}}">
+                    <div class="actor" draggable ng-repeat="actor in actors" style="{{actor.style}}" id="{{actor.id}}" ng-click="getProperties(actor)">
                         {{actor.contents}}
                     </div>
                 </div>
             </div>
             <div class="span2" id="widgets">
                 Properties
-                <div id="properties">
-                    
+                <div id="properties" ng-model="actor">
+                    <input type="text" ng-model="actor.id" placeholder="id"/>
+                    <input type="text" ng-model="actor.height" placeholder="height"/>
+                    <input type="text" ng-model="actor.width" placeholder="width"/>
+                    <input type="text" ng-model="actor.left" placeholder="left"/>
+                    <input type="text" ng-model="actor.top" placeholder="top"/>
+                    <input type="text" ng-model="actor.zindex" placeholder="position"/>
+                    <input type="text" ng-model="actor.background" placeholder="background" />
+                    <input type="text" ng-model="actor.image" placeholder="bg-image"/>
+                    <input type="text" id="new-actor-value" value="top:{{actor.top}};left:{{actor.left}};height:{{actor.height}};width:{{actor.width}};z-index:{{actor.zindex}};background:{{actor.background}};background-image:url('{{actor.image}}');" />
+                    <button ng-click="updateActor()" class="btn">Save changes</button>
+                    <button ng-click="removeActor()" class="btn">Delete</button>
                 </div>
                 Tools
                 <div id="tools" class="tool-box">
@@ -64,5 +82,6 @@
                 </div>
             </div>
         </div>
+        <!--End of row stage-container-->
     </div>
 </div>

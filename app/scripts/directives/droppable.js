@@ -25,23 +25,37 @@ angular.module('ProgrammerRPGApp')
 
                     function setActorProp(defaultHeight,defaultWidth,defaultColor){
                         var actorObj = {
-                            style:'height:'+defaultHeight+'px;'+
-                                  'width:'+defaultWidth+'px;'+
-                                  'background:'+defaultColor+';',
-                        }
+                                height:defaultHeight+'px',
+                                width:defaultWidth+'px',
+                                zindex:scope.actors.length,
+                                background:defaultColor
+                            }
+                        actorObj.style='height:'+actorObj.height+';'+
+                                  'width:'+actorObj.width+';'+
+                                  'z-index:'+actorObj.zindex+';'+
+                                  'background:'+actorObj.background+';';
+                        actorObj.left=(event.clientX-offsetLeft)+'px';
+                        actorObj.style+='left:'+actorObj.left+';';
+                        actorObj.top=(event.clientY-offsetTop)+'px';
+                        actorObj.style+='top:'+actorObj.top+';';
+                        actorObj.id = "actor-"+scope.actors.length+'-'+Math.floor((Math.random()*10000000));
                         return actorObj;
                     }
                     if (actor.id == 'character'){
                         //Place this character on the state.
-                        console.log(actorObj);
                         actorObj = setActorProp(200,300,defaultColor);
-                        actorObj.style+='left:'+(event.clientX-offsetLeft)+'px;';
-                        actorObj.style+='top:'+(event.clientY-offsetTop)+'px;';
                         actorObj.contents='Character';
-                        console.log(actorObj);
                         scope.actors.push(actorObj);
-                        scope.$apply();
+                    }else if(actor.id == 'text-box'){
+                        actorObj = setActorProp(100,300,defaultColor);
+                        actorObj.contents='Text Box';
+                        scope.actors.push(actorObj);
+                    }else if(actor.id == 'timer'){
+                        actorObj = setActorProp(50,300,defaultColor);
+                        actorObj.contents='Timer';
+                        scope.actors.push(actorObj);
                     }
+                    scope.$apply();
                 }
               });
             } 
