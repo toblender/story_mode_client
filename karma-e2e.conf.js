@@ -49,3 +49,8 @@ captureTimeout = 5000;
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit
 singleRun = false;
+proxies =  {
+    '/': 'http://localhost:9000' // Keep this in sync with localhost port in Gruntfile.
+};
+urlRoot = '/__e2e/';
+

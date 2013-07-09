@@ -1,11 +1,18 @@
 'use strict';
 
-angular.module('ProgrammerRPGApp', [])
+//http://angular-ui.github.io/bootstrap/#/getting_started
+//Problem if there are major improvements in bootstrap they may not be merged.
+
+angular.module('ProgrammerRPGApp', ['ui.bootstrap'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainController'
+      })
+      .when('/admin', {
+        templateUrl: 'views/admin.html',
+        controller: 'AdminController'
       })
       .otherwise({
         redirectTo: '/'

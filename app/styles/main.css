@@ -1,1 +1,26 @@
-/* Will be compiled down to a single stylesheet with your sass files */
+#stage .background{
+width:800px;
+height:600px;
+}
+
+.pr-draggable{
+width:100px;
+height:100px;
+background:black;
+border:2px solid grey;
+color:white;
+}
+
+#widgets{
+position:relative;
+z-index:1;
+}
+
+.background{
+position:relative;
+z-index:0;
+}
+
+.actor{
+position:absolute;
+}

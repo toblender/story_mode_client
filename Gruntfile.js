@@ -99,6 +99,9 @@ module.exports = function (grunt) {
       ]
     },
     karma: {
+      e2e: {
+        configFile:'karma-e2e.conf.js'
+      },
       unit: {
         configFile: 'karma.conf.js',
         singleRun: true
@@ -279,6 +282,22 @@ module.exports = function (grunt) {
     'connect:test',
     'karma'
   ]);
+
+  grunt.registerTask('test:unit', [
+    'clean:server',
+    'coffee',
+    'compass',
+    'connect:test',
+    'karma:unit'
+  ]);
+
+  grunt.registerTask('test:e2e', [
+    'clean:server',
+    'coffee',
+    'compass',
+    'karma:e2e'
+  ]);
+
 
   grunt.registerTask('build', [
     'clean:dist',
