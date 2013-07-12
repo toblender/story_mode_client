@@ -1,16 +1,47 @@
 'use strict';
 
 angular.module('ProgrammerRPGApp')
-  .controller('AdminController', function ($scope) {
+  .controller('AdminController', function ($scope, Game) {
+   
+    //TODO they will be doing this better in the future, stick with ugly for now 
+    var gameInfo = Game.get({gameName:'newgame'},
+      function success (data, status, headers, config) {
+        // this callback will be called asynchronously
+        // when the response is available
+        console.log('Game found');
+        console.log(data);
+        getScenes(data);
+      },
+      function error(data, status, headers, config) {
+        // called asynchronously if an error occurs
+        // or server returns response with an error status.
+        console.log('Game not found');
+      });
 
     //If there is no table then go for
+    $scope.longName = "Long Name";
+    $scope.shortName= "shortName";
+
     $scope.scenes=[{}];
     $scope.frames=[[]];
 
     $scope.actors=[];
     $scope.actor={};
 
-    $scope.getActors = function(){
+    //Pull the data
+        //Then run
+            //$scope.getActors();
+
+    function getScenes (gameInfo){
+        $scope.longName = gameInfo.longName;
+        $scope.shortName = gameInfo.shortName;
+        $scope.scenes = gameInfo.scenes;
+        getActors(0);//First scene of the game
+    } 
+
+    function getActors (currentScene){
+        $scope.frames = $scope.scenes[currentScene].frames;
+
         angular.forEach($scope.frames, function(frame){
             angular.forEach(frame,function(currentObj){
                 if(currentObj.type != 'sound'){
@@ -64,5 +95,4 @@ angular.module('ProgrammerRPGApp')
         });
     }
 
-    $scope.getActors();
   });

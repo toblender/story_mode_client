@@ -3,7 +3,7 @@
 //http://angular-ui.github.io/bootstrap/#/getting_started
 //Problem if there are major improvements in bootstrap they may not be merged.
 
-angular.module('ProgrammerRPGApp', ['ui.bootstrap','cssBackgroundURL'])
+angular.module('ProgrammerRPGApp', ['ui.bootstrap','cssBackgroundURL','gameServices'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
