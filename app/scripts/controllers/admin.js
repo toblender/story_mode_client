@@ -4,18 +4,9 @@ angular.module('ProgrammerRPGApp')
   .controller('AdminController', function ($scope) {
 
     //If there is no table then go for
-    $scope.scenes=[
-        {src:'test',alt:'test'},
-        {src:'test',alt:'test'}
-    ];
-    $scope.frames=[
-                [ 
-                    {style:"top:171px;left:257px;height:200px;width:300px;z-index:0;background:#d7103a;background-image:url('');",type:'character',id:'actor-0-1',contents:'Saved character'},    
-                    {style:"top:40px;left:417px;height:50px;width:300px;z-index:2;background:#22b159;background-image:url('');",type:'timer',id:'actor-1-2',contents:'Saved timer'},    
-                    {style:"top:426px;left:92px;height:200px;width:600px;z-index:0;background:#a94bc3;background-image:url('');",type:'textbox',id:'actor-2-3',contents:'Saved textbox'},
-                    {value:'soundfile.midi',type:'sound'}   
-                ]
-                ];
+    $scope.scenes=[{}];
+    $scope.frames=[[]];
+
     $scope.actors=[];
     $scope.actor={};
 
@@ -33,7 +24,6 @@ angular.module('ProgrammerRPGApp')
             });
         });
     }
-    $scope.getActors();
     $scope.getProperties = function(currentActor){
         //When I click the actor
         //Grab me all the parts
@@ -73,4 +63,6 @@ angular.module('ProgrammerRPGApp')
             }
         });
     }
+
+    $scope.getActors();
   });
