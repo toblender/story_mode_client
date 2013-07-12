@@ -4,7 +4,10 @@ angular.module('ProgrammerRPGApp')
   .controller('AdminController', function ($scope, Game) {
    
     //TODO they will be doing this better in the future, stick with ugly for now 
-    var gameInfo = Game.get({gameName:'newgame'},
+    var gameInfo = Game.gameRead({
+                                    actor:'game',
+                                    action:'read', 
+                                    gameName:'newgame'},
       function success (data, status, headers, config) {
         // this callback will be called asynchronously
         // when the response is available
@@ -23,6 +26,7 @@ angular.module('ProgrammerRPGApp')
     $scope.shortName= "shortName";
 
     $scope.scenes=[{}];
+    $scope.currentScene;
     $scope.frames=[[]];
 
     $scope.actors=[];
@@ -36,6 +40,7 @@ angular.module('ProgrammerRPGApp')
         $scope.longName = gameInfo.longName;
         $scope.shortName = gameInfo.shortName;
         $scope.scenes = gameInfo.scenes;
+        $scope.currentScene=0;//We are on the first scene
         getActors(0);//First scene of the game
     } 
 
@@ -81,7 +86,7 @@ angular.module('ProgrammerRPGApp')
         angular.element('#'+$scope.actor.id).attr('style',angular.element('#new-actor-value').val());
     }
 
-    $scope.removeActor = function(){
+    $scope.dropActor = function(){
         //Account for the fact if there isn't at least one angular element nothing will generate
         //This is the noob way of removing, do it the Angular way
         //check each actor, and only keep the new actors
@@ -93,6 +98,29 @@ angular.module('ProgrammerRPGApp')
                 $scope.actors.push(actor);
             }
         });
+    }
+
+    $scope.createFrame = function(){
+        //Create a new frame tab
+        //Rely on scope for the fun
+        //WHAHAHHAHAHAHHA angular will draw this for me!!!!!!!!!
+        $scope.frames.push([]);
+        
+        //Save the scene
+        Game.frameCreate({
+                    actor:'frame',
+                    action:'create',
+                    gameName:$scope.shortName,
+                    scene:$scope.currentScene,
+                    frameInfo:[]},
+            function success (data, status, headers, config) {
+            }, 
+            function error (data, status, headers, config) {
+            });
+    }
+
+    $scope.createScene = function(){
+        $scope.scenes.push([]);
     }
 
   });

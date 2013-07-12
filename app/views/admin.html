@@ -1,14 +1,14 @@
 <div class="row" id="admin-interface">
     <div class="span2" id="scene-nav">Scene Navigation
         <ul>
-            <li ng-repeat="scene in scenes">
+            <li ng-repeat="scene in scenes" >
               <div class="btn-group">
-                  <a class="btn dropdown-toggle">
+                  <a class="btn dropdown-toggle" ng-class="{active:$first}">
                         <span><i class="icon-film"></i> Scene {{$index + 1 || 1}}</span>
                         <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                        <li><a href="">Add Scene</a></li>
+                        <li><a ng-click='createScene()'>Add Scene</a></li>
                         <li><a href="">Duplicate Scene</a></li>
                         <li><a href="">Delete Scene</a></li>
                   </ul>
@@ -25,8 +25,9 @@
                     Frames
                     <div class="btn-toolbar">
                         <div class="btn-group">
-                            <button class="btn" ng-repeat="frame in frames">{{$index + 1}}</button>
+                            <button class="btn" ng-class="{active:$first}" ng-repeat="frame in frames">{{$index + 1}}</button>
                         </div>
+                        <button class="btn" ng-click="createFrame()">+</button>
                     </div>
                 </div>
             </div>
@@ -67,7 +68,7 @@
                     <input type="text" ng-model="actor.image" placeholder="bg-image"/>
                     <input type="text" id="new-actor-value" value="top:{{actor.top}};left:{{actor.left}};height:{{actor.height}};width:{{actor.width}};z-index:{{actor.zindex}};background:{{actor.background}};background-image:{{actor.image | filterURL}};" />
                     <button ng-click="updateActor()" class="btn">Save changes</button>
-                    <button ng-click="removeActor()" class="btn">Delete</button>
+                    <button ng-click="dropActor()" class="btn">Delete</button>
                 </div>
                 Tools
                 <div id="tools" class="tool-box">
