@@ -1,4 +1,5 @@
 'use strict';
+/*global $:false */
 
 angular.module('ProgrammerRPGApp')
     .directive('draggable',function(){
@@ -20,5 +21,5 @@ angular.module('ProgrammerRPGApp')
 
                 }
             }
-        }
+        };
     });

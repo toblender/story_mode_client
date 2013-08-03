@@ -1,4 +1,5 @@
 'use strict';
+/*global $:false */
 
 angular.module('ProgrammerRPGApp')
     .directive('droppable',function(){
@@ -29,7 +30,7 @@ angular.module('ProgrammerRPGApp')
                                 width:defaultWidth+'px',
                                 zindex:scope.actors.length,
                                 background:defaultColor
-                            }
+                            };
                         actorObj.style='height:'+actorObj.height+';'+
                                   'width:'+actorObj.width+';'+
                                   'z-index:'+actorObj.zindex+';'+
@@ -38,19 +39,19 @@ angular.module('ProgrammerRPGApp')
                         actorObj.style+='left:'+actorObj.left+';';
                         actorObj.top=(event.clientY-offsetTop)+'px';
                         actorObj.style+='top:'+actorObj.top+';';
-                        actorObj.id = "actor-"+scope.actors.length+'-'+Math.floor((Math.random()*10000000));
+                        actorObj.id = 'actor-'+scope.actors.length+'-'+Math.floor((Math.random()*10000000));
                         return actorObj;
                     }
-                    if (actor.id == 'character'){
+                    if (actor.id === 'character'){
                         //Place this character on the state.
                         actorObj = setActorProp(200,300,defaultColor);
                         actorObj.contents='Character';
                         scope.actors.push(actorObj);
-                    }else if(actor.id == 'text-box'){
+                    }else if(actor.id === 'text-box'){
                         actorObj = setActorProp(100,300,defaultColor);
                         actorObj.contents='Text Box';
                         scope.actors.push(actorObj);
-                    }else if(actor.id == 'timer'){
+                    }else if(actor.id === 'timer'){
                         actorObj = setActorProp(50,300,defaultColor);
                         actorObj.contents='Timer';
                         scope.actors.push(actorObj);
@@ -58,6 +59,6 @@ angular.module('ProgrammerRPGApp')
                     scope.$apply();
                 }
               });
-            } 
-        }
+            }
+        };
     });

@@ -1,14 +1,16 @@
 'use strict';
+/*global $:false */
 
 angular.module('ProgrammerRPGApp')
   .controller('AdminController', function ($scope, Game) {
-   
-    //TODO they will be doing this better in the future, stick with ugly for now 
-    var gameInfo = Game.gameRead({
-                                    actor:'game',
-                                    action:'read', 
-                                    gameName:'newgame'},
-      function success (data, status, headers, config) {
+     Game.gameRead({
+        actor:'game',
+        action:'read',
+        gameName:'newgame'
+      },
+
+      //TODO they will be doing this better in the future, stick with ugly for now 
+     function success (data, status, headers, config) {
         // this callback will be called asynchronously
         // when the response is available
         console.log('Game found');
@@ -22,11 +24,11 @@ angular.module('ProgrammerRPGApp')
       });
 
     //If there is no table then go for
-    $scope.longName = "Long Name";
-    $scope.shortName= "shortName";
+    $scope.longName = 'Long Name';
+    $scope.shortName= 'shortName';
 
     $scope.scenes=[{}];
-    $scope.currentScene;
+    $scope.currentScene=0;
     $scope.frames=[[]];
 
     $scope.actors=[];
@@ -42,19 +44,19 @@ angular.module('ProgrammerRPGApp')
         $scope.scenes = gameInfo.scenes;
         $scope.currentScene=0;//We are on the first scene
         getActors(0);//First scene of the game
-    } 
+        }
 
     function getActors (currentScene){
         $scope.frames = $scope.scenes[currentScene].frames;
 
         angular.forEach($scope.frames, function(frame){
             angular.forEach(frame,function(currentObj){
-                if(currentObj.type != 'sound'){
+                if(currentObj.type !== 'sound'){
                     var currentActor = {
                         style:currentObj.style,
                         id:currentObj.id,
                         contents:currentObj.contents
-                    }
+                    };
                     $scope.actors.push(currentActor);
                 }
             });
@@ -79,12 +81,11 @@ angular.module('ProgrammerRPGApp')
         $scope.actor.zindex=$('#'+currentActor.id).css('z-index');
 
         //$scope.$apply(); Drag event already fires apply..
-        
     };
     $scope.updateActor = function(){
         //Change style of actor
         angular.element('#'+$scope.actor.id).attr('style',angular.element('#new-actor-value').val());
-    }
+    };
 
     $scope.dropActor = function(){
         //Account for the fact if there isn't at least one angular element nothing will generate
@@ -94,18 +95,18 @@ angular.module('ProgrammerRPGApp')
         $scope.actors = [];
         //Loop through the old one dahhhh
         angular.forEach(oldActors, function(actor){
-            if($scope.actor.id != actor.id){
+            if($scope.actor.id !== actor.id){
                 $scope.actors.push(actor);
             }
         });
-    }
+    };
 
     $scope.createFrame = function(){
         //Create a new frame tab
         //Rely on scope for the fun
         //WHAHAHHAHAHAHHA angular will draw this for me!!!!!!!!!
         $scope.frames.push([]);
-        
+
         //Save the scene
         Game.frameCreate({
                     actor:'frame',
@@ -114,13 +115,13 @@ angular.module('ProgrammerRPGApp')
                     scene:$scope.currentScene,
                     frameInfo:[]},
             function success (data, status, headers, config) {
-            }, 
+            },
             function error (data, status, headers, config) {
             });
-    }
+    };
 
     $scope.createScene = function(){
         $scope.scenes.push([]);
-    }
+    };
 
   });
