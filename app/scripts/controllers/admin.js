@@ -8,9 +8,8 @@ angular.module('ProgrammerRPGApp')
         action:'read',
         gameName:'newgame'
       },
-
       //TODO they will be doing this better in the future, stick with ugly for now 
-     function success (data, status, headers, config) {
+      function success (data, status, headers, config) {
         // this callback will be called asynchronously
         // when the response is available
         console.log('Game found');
@@ -29,6 +28,7 @@ angular.module('ProgrammerRPGApp')
 
     $scope.scenes=[{}];
     $scope.currentScene=0;
+    $scope.currentFrame=0;
     $scope.frames=[[]];
 
     $scope.actors=[];
@@ -48,8 +48,8 @@ angular.module('ProgrammerRPGApp')
 
     function getActors (currentScene){
         $scope.frames = $scope.scenes[currentScene].frames;
-
-        angular.forEach($scope.frames, function(frame){
+        $scope.actors = $scope.frames[0];
+        /*angular.forEach($scope.frames, function(frame){
             angular.forEach(frame,function(currentObj){
                 if(currentObj.type !== 'sound'){
                     var currentActor = {
@@ -60,7 +60,7 @@ angular.module('ProgrammerRPGApp')
                     $scope.actors.push(currentActor);
                 }
             });
-        });
+        });*/
     }
     $scope.getProperties = function(currentActor){
         //When I click the actor
@@ -101,6 +101,26 @@ angular.module('ProgrammerRPGApp')
         });
     };
 
+    //SCENE specific function
+    $scope.createScene = function(){
+        $scope.scenes.push([]);
+        Game.sceneCreate({
+            actor:'scene',
+            action:'create',
+            gameName:$scope.shortName
+        },
+        function success (data, status, headers, config) {
+            console.log("scene created.");
+        },
+        function error (data, status, headers, config) {
+            console.log("scene create fail.");
+        });     
+
+    };
+
+
+
+    //FRAME specific function
     $scope.createFrame = function(){
         //Create a new frame tab
         //Rely on scope for the fun
@@ -120,8 +140,70 @@ angular.module('ProgrammerRPGApp')
             });
     };
 
-    $scope.createScene = function(){
-        $scope.scenes.push([]);
-    };
+
+    //Reset frame
+    var frameReset = function(){
+        $scope.actors=[];
+    }
+
+    $scope.updateFrame= function(currentFrame){
+        Game.frameUpdate({
+            actor:'frame',
+            action:'update',
+            gameName:$scope.shortName,
+            scene:$scope.currentScene,
+            frame:currentFrame,
+            frameInfo:$scope.actors
+            },
+            function success (data, status, headers, config) {
+                console.log(currentFrame + " frame saved.");
+            },
+            function error (data, status, headers, config) {
+                console.log(currentFrame + " frame failed save.");
+            });
+    }
+
+    $scope.setActiveFrame = function(activeFrame){
+        //Make current button active
+        $scope.updateFrame($scope.currentFrame);
+        $scope.loadFrame(activeFrame);
+    }
+
+    $scope.loadFrame = function(activeFrame){
+        $scope.currentFrame=activeFrame;
+        //Remove actors from scene
+        frameReset();
+        //Put in the actors
+        $scope.actors = $scope.frames[activeFrame];
+        $scope.actors = $scope.actors == undefined ? [] : $scope.actors;
+
+    }
+ 
+    $scope.saveChanges = function(currentActor){
+        console.log(currentActor);
+    }
+
+    $scope.dropFrame= function(frameIndex){
+        //Drop it on the server side 
+        Game.frameDrop({
+            actor:'frame',
+            action:'drop',
+            gameName:$scope.shortName,
+            scene:$scope.currentScene,
+            frame:frameIndex
+        },
+        function success (data, status, headers, config) {
+            console.log(frameIndex + " frame droped.");
+            //Drop it from active frames
+                //Set active frame 0 
+            $scope.frames.splice(frameIndex,1);
+            $scope.loadFrame(0);
+            
+        },
+        function error (data, status, headers, config) {
+            console.log(frameIndex + " frame failed drop frame.");
+        });     
+    }
+
 
   });

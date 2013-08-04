@@ -8,6 +8,8 @@ angular.module('ProgrammerRPGApp')
             link: function(scope,element,attrs){
                 //Detect the type of draggable
                 element = $(element);
+                //pr is my own directive...
+                    //These are for the tools
                 if(element.hasClass('pr-draggable')){
                     element.draggable({
                         revert:true,

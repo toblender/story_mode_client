@@ -13,6 +13,9 @@ angular.module('gameServices',['ngResource']).
             },
             {
                 'gameRead':{method:'GET'},
-                'frameCreate':{method:'POST'}
+                'frameCreate':{method:'POST'},
+                'frameUpdate':{method:'POST'},
+                'frameDrop':{method:'POST'},
+                'sceneCreate':{method:'POST'}
             });
     });
