@@ -16,6 +16,7 @@ angular.module('gameServices',['ngResource']).
                 'frameCreate':{method:'POST'},
                 'frameUpdate':{method:'POST'},
                 'frameDrop':{method:'POST'},
-                'sceneCreate':{method:'POST'}
+                'sceneCreate':{method:'POST'},
+                'sceneUpdate':{method:'POST'}
             });
     });

@@ -8,7 +8,7 @@ angular.module('ProgrammerRPGApp')
         action:'read',
         gameName:'newgame'
       },
-      //TODO they will be doing this better in the future, stick with ugly for now 
+      //TODO they will be doing this better in the future, stick with ugly for now
       function success (data, status, headers, config) {
         // this callback will be called asynchronously
         // when the response is available
@@ -114,10 +114,38 @@ angular.module('ProgrammerRPGApp')
         },
         function error (data, status, headers, config) {
             console.log("scene create fail.");
-        });     
+        });
 
     };
 
+    $scope.updateScene = function(currentScene){
+        //Update database with the active scene
+        Game.sceneUpdate({
+            actor:'scene',
+            action:'update',
+            gameName:$scope.shortName,
+            scene:currentScene,
+            sceneInfo:{
+                frames:$scope.frames
+                //This can be where you add the scene related stuff?
+            }
+        },
+        function success (data, status, headers, config) {
+            console.log(currentScene + " scene updated.");
+        },
+        function error (data, status, headers, config) {
+            console.log(currentScene + " scene update fail.");
+        });
+    }
+
+    $scope.setActiveScene = function(activeScene){
+        $scope.updateScene($scope.currentScene);
+        //Set the active scene
+        //Draw the frames
+        $scope.frames = $scope.scenes[activeScene].frames;
+        $scope.currentScene = activeScene;
+        $scope.loadFrame(0);
+    }
 
 
     //FRAME specific function
@@ -166,6 +194,7 @@ angular.module('ProgrammerRPGApp')
     $scope.setActiveFrame = function(activeFrame){
         //Make current button active
         $scope.updateFrame($scope.currentFrame);
+        //TODO this should be driven by success
         $scope.loadFrame(activeFrame);
     }
 
@@ -178,13 +207,13 @@ angular.module('ProgrammerRPGApp')
         $scope.actors = $scope.actors == undefined ? [] : $scope.actors;
 
     }
- 
+
     $scope.saveChanges = function(currentActor){
         console.log(currentActor);
     }
 
     $scope.dropFrame= function(frameIndex){
-        //Drop it on the server side 
+        //Drop it on the server side
         Game.frameDrop({
             actor:'frame',
             action:'drop',
@@ -195,14 +224,14 @@ angular.module('ProgrammerRPGApp')
         function success (data, status, headers, config) {
             console.log(frameIndex + " frame droped.");
             //Drop it from active frames
-                //Set active frame 0 
+                //Set active frame 0
             $scope.frames.splice(frameIndex,1);
             $scope.loadFrame(0);
-            
+
         },
         function error (data, status, headers, config) {
             console.log(frameIndex + " frame failed drop frame.");
-        });     
+        });
     }
 
 
