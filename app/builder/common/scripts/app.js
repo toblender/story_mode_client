@@ -7,11 +7,11 @@ angular.module('ProgrammerRPGApp', ['ui.bootstrap','cssBackgroundURL','gameServi
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
+        templateUrl: 'builder/common/views/main.html',
         controller: 'MainController'
       })
       .when('/admin', {
-        templateUrl: 'views/admin.html',
+        templateUrl: 'builder/common/views/admin.html',
         controller: 'AdminController'
       })
       .otherwise({

@@ -28,8 +28,6 @@ angular.module('ProgrammerRPGApp')
 
     $scope.scenes=[{}];
     $scope.currentScene=0;
-    $scope.currentFrame=0;
-    $scope.frames=[[]];
 
     $scope.actors=[];
     $scope.actor={};
@@ -48,7 +46,9 @@ angular.module('ProgrammerRPGApp')
 
     function getActors (currentScene){
         $scope.frames = $scope.scenes[currentScene].frames;
+        $scope.$broadcast('UPDATE_FRAMES',$scope.frames);
         $scope.actors = $scope.frames[0];
+        $scope.$broadcast('UPDATE_ACTORS',$scope.actors);
         /*angular.forEach($scope.frames, function(frame){
             angular.forEach(frame,function(currentObj){
                 if(currentObj.type !== 'sound'){
@@ -145,93 +145,6 @@ angular.module('ProgrammerRPGApp')
         $scope.frames = $scope.scenes[activeScene].frames;
         $scope.currentScene = activeScene;
         $scope.loadFrame(0);
-    }
-
-
-    //FRAME specific function
-    $scope.createFrame = function(){
-        //Create a new frame tab
-        //Rely on scope for the fun
-        //WHAHAHHAHAHAHHA angular will draw this for me!!!!!!!!!
-        $scope.frames.push([]);
-
-        //Save the scene
-        Game.frameCreate({
-                    actor:'frame',
-                    action:'create',
-                    gameName:$scope.shortName,
-                    scene:$scope.currentScene,
-                    frameInfo:[]},
-            function success (data, status, headers, config) {
-            },
-            function error (data, status, headers, config) {
-            });
-    };
-
-
-    //Reset frame
-    var frameReset = function(){
-        $scope.actors=[];
-    }
-
-    $scope.updateFrame= function(currentFrame){
-        Game.frameUpdate({
-            actor:'frame',
-            action:'update',
-            gameName:$scope.shortName,
-            scene:$scope.currentScene,
-            frame:currentFrame,
-            frameInfo:$scope.actors
-            },
-            function success (data, status, headers, config) {
-                console.log(currentFrame + " frame saved.");
-            },
-            function error (data, status, headers, config) {
-                console.log(currentFrame + " frame failed save.");
-            });
-    }
-
-    $scope.setActiveFrame = function(activeFrame){
-        //Make current button active
-        $scope.updateFrame($scope.currentFrame);
-        //TODO this should be driven by success
-        $scope.loadFrame(activeFrame);
-    }
-
-    $scope.loadFrame = function(activeFrame){
-        $scope.currentFrame=activeFrame;
-        //Remove actors from scene
-        frameReset();
-        //Put in the actors
-        $scope.actors = $scope.frames[activeFrame];
-        $scope.actors = $scope.actors == undefined ? [] : $scope.actors;
-
-    }
-
-    $scope.saveChanges = function(currentActor){
-        console.log(currentActor);
-    }
-
-    $scope.dropFrame= function(frameIndex){
-        //Drop it on the server side
-        Game.frameDrop({
-            actor:'frame',
-            action:'drop',
-            gameName:$scope.shortName,
-            scene:$scope.currentScene,
-            frame:frameIndex
-        },
-        function success (data, status, headers, config) {
-            console.log(frameIndex + " frame droped.");
-            //Drop it from active frames
-                //Set active frame 0
-            $scope.frames.splice(frameIndex,1);
-            $scope.loadFrame(0);
-
-        },
-        function error (data, status, headers, config) {
-            console.log(frameIndex + " frame failed drop frame.");
-        });
     }
 
 

@@ -11,8 +11,8 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css styles/main.css -->
-    <link rel="stylesheet" href="styles/bootstrap.css">
-    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="builder/common/styles/bootstrap.css">
+    <link rel="stylesheet" href="builder/common/styles/main.css">
     <!-- endbuild -->
   </head>
   <body ng-app="ProgrammerRPGApp">
@@ -37,13 +37,15 @@
     <script src="components/angular-bootstrap/ui-bootstrap-0.4.0.js"></script>
 
     <!-- build:js scripts/scripts.js -->
-    <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/admin.js"></script>
-    <script src="scripts/directives/draggable.js"></script>
-    <script src="scripts/directives/droppable.js"></script>
-    <script src="scripts/filters/css-background-url.js"></script>
-    <script src="scripts/services/adminService.js"></script>
+    <script src="builder/common/scripts/app.js"></script>
+    <script src="builder/common/scripts/controllers/main.js"></script>
+    <script src="builder/common/scripts/controllers/admin.js"></script>
+    <script src="builder/common/scripts/directives/draggable.js"></script>
+    <script src="builder/common/scripts/directives/droppable.js"></script>
+    <script src="builder/common/scripts/filters/css-background-url.js"></script>
+    <script src="builder/common/scripts/services/adminService.js"></script>
+    <script src="builder/frame/scripts/controllers/frame.js"></script>
+    <script src="builder/stage/scripts/controllers/stage.js"></script>
     <!-- endbuild -->
 
   </body>

@@ -22,7 +22,7 @@
             <div class="span9">
                 <a class="btn"><i class="icon-download-alt"></i> Save</a>
                 <span>{{longName}}: {{shortName}}</span>
-                <div id="frames">
+                <div id="frames" data-ng-controller="FrameController">
                     Frames
                     <div class="btn-toolbar">
                         <div class="btn-group" ng-repeat="frame in frames">
@@ -53,7 +53,7 @@
                 </div>
             </div>
         </div>
-        <div class="row stage-container">
+        <div class="row stage-container" data-ng-controller="StageController">
             <div class="span10" id="stage">
                 <div class="well background" droppable>
                     background
