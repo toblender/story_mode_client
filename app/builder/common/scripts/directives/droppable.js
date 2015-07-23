@@ -2,7 +2,7 @@
 /*global $:false */
 
 angular.module('ProgrammerRPGApp')
-    .directive('droppable',function(){
+    .directive('droppable',function($rootScope){
         return{
             //Link does the registering of DOM listener
             link: function(scope,element,attrs){
@@ -70,7 +70,7 @@ angular.module('ProgrammerRPGApp')
                         var actorObj = {
                             height:actor.clientHeight+'px',
                             width:actor.clientWidth+'px',
-                            zindex:actor.index,
+                            zindex:actor.style.zIndex ? actor.style.zIndex : actor.index,
                             background:actor.style.background,
                             style:actor.getAttribute('style'),
                             left:actor.style.left,
@@ -79,6 +79,8 @@ angular.module('ProgrammerRPGApp')
                             id:actor.id
                         }
                         scope.actors[actor.index]=actorObj;
+                        //Update the current actor properties
+                        $rootScope.$broadcast('UPDATE_ACTOR_PROPERTIES',actor.index);
                         console.log(actor);
                     }
                     scope.$apply();

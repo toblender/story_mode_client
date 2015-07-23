@@ -6,6 +6,7 @@ angular.module('ProgrammerRPGApp')
     //FRAME specific function
     $scope.currentFrame=0;
     $scope.frames=[[]];
+    var actors = [];
     $scope.createFrame = function(){
         //Create a new frame tab
         //Rely on scope for the fun
@@ -28,8 +29,8 @@ angular.module('ProgrammerRPGApp')
 
     //Reset frame
     var frameReset = function(){
-        $scope.actors = [];
-        $rootScope.$broadcast('UPDATE_ACTORS',$scope.actors);
+        actors = [];
+        $rootScope.$broadcast('UPDATE_ACTORS',actors);
     }
 
     $scope.updateFrame= function(currentFrame){
@@ -39,7 +40,7 @@ angular.module('ProgrammerRPGApp')
             gameName:$scope.shortName,
             scene:$scope.currentScene,
             frame:currentFrame,
-            frameInfo:$scope.actors
+            frameInfo:$scope.frames[currentFrame]
             },
             function success (data, status, headers, config) {
                 console.log(currentFrame + " frame saved.");
@@ -61,9 +62,9 @@ angular.module('ProgrammerRPGApp')
         //Remove actors from scene
         frameReset();
         //Put in the actors
-        $scope.actors = $scope.frames[activeFrame];
-        $scope.actors = $scope.actors == undefined ? [] : $scope.actors;
-        $rootScope.$broadcast('UPDATE_ACTORS',$scope.actors);
+        actors = $scope.frames[activeFrame];
+        actors = actors == undefined ? [] : actors;
+        $rootScope.$broadcast('UPDATE_ACTORS',actors);
 
     }
 
@@ -93,8 +94,27 @@ angular.module('ProgrammerRPGApp')
         });
     }
 
+    //Move frame up / down
+    $scope.frameUp = function(frameIndex){
+        var newSpot = frameIndex + 1;
+        if(newSpot > $scope.frames.length-1){
+            newSpot = $scope.frames.length-1;
+        }
+        var frame = $scope.frames[frameIndex];
+        $scope.frames.splice(frameIndex,1);
+        $scope.frames.splice(newSpot,0,frame);
+        $scope.setActiveFrame(newSpot);
+    }
+
+    $scope.frameDown = function(){
+        //Check boundary
+    }
     $scope.$on('UPDATE_FRAMES',function(event,frames){
         $scope.frames = frames;
+    });
+    $scope.$on('UPDATE_FRAME',function(event,frame){
+        $scope.frames[$scope.currentFrame] = frame;
+        $scope.updateFrame($scope.currentFrame);
     });
 
   });

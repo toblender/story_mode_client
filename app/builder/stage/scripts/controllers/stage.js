@@ -2,16 +2,22 @@
 /*global $:false */
 
 angular.module('ProgrammerRPGApp')
-  .controller('StageController', function ($scope, Game) {
+  .controller('StageController', function ($scope, Game, $rootScope) {
     $scope.actors=[];
-    $scope.actor={};
+    $scope.currentActor={};
 
+    $scope.$on('UPDATE_ACTOR_PROPERTIES',function(event,index){
+        $scope.getProperties(index);
+    });
     $scope.getProperties = function(currentActor){
+        $scope.actor = $scope.actors[currentActor];
+        /*
         //When I click the actor
         //Grab me all the parts
         //Fill it according styles
         var baseStyle = event.currentTarget.attributes.style;
         $scope.actor=currentActor;
+        currentActor.index = index;
 
         //Actor scope for new top/left not updated  force an update
         $scope.actor.top=$('#'+currentActor.id).css('top');
@@ -25,10 +31,13 @@ angular.module('ProgrammerRPGApp')
         $scope.actor.zindex=$('#'+currentActor.id).css('z-index');
 
         //$scope.$apply(); Drag event already fires apply..
+        */
     };
     $scope.updateActor = function(){
         //Change style of actor
         angular.element('#'+$scope.actor.id).attr('style',angular.element('#new-actor-value').val());
+        $scope.actors[$scope.actor.index]=$scope.actor;
+        saveChanges();
     };
 
     $scope.dropActor = function(){
@@ -43,11 +52,16 @@ angular.module('ProgrammerRPGApp')
                 $scope.actors.push(actor);
             }
         });
+        saveChanges();
     };
 
     $scope.$on('UPDATE_ACTORS',function(event,actors){
         $scope.actors = actors;
         console.log('actor updated');
-    }); 
+    });
+
+    var saveChanges = function(){
+        $rootScope.$broadcast('UPDATE_FRAME', $scope.actors);
+    }
 
   });
