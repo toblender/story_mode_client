@@ -106,8 +106,16 @@ angular.module('ProgrammerRPGApp')
         $scope.setActiveFrame(newSpot);
     }
 
-    $scope.frameDown = function(){
+    $scope.frameDown = function(frameIndex){
         //Check boundary
+        var newSpot = frameIndex - 1;
+        if(newSpot < 0){
+            newSpot = 0;
+        }
+        var frame = $scope.frames[frameIndex];
+        $scope.frames.splice(frameIndex,1);
+        $scope.frames.splice(newSpot,0,frame);
+        $scope.setActiveFrame(newSpot);
     }
     $scope.$on('UPDATE_FRAMES',function(event,frames){
         $scope.frames = frames;

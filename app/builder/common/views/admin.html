@@ -31,6 +31,7 @@
                                 <li><a ng-click="setActiveFrame($index)">Set Active Frame</a></li>
                                 <li><a ng-click="">Duplicate Frame</a></li>
                                 <li><a ng-show="frames.length > 1" ng-click="frameUp($index)">Move frame up</a></li>
+                                <li><a ng-show="frames.length > 1" ng-click="frameDown($index)">Move frame down</a></li>
                                 <li><a ng-show="frames.length > 1" ng-click="dropFrame($index)">Delete Frame</a></li>
                           </ul>
 
@@ -58,8 +59,7 @@
             <div class="span10" id="stage">
                 <div class="well background" droppable>
                     background
-                    <div class="actor" draggable ng-repeat="actor in actors" style="top:{{actor.top}};left:{{actor.left}};height:{{actor.height}};width:{{actor.width}};z-index:{{actor.zindex}};background:{{actor.background}};background-image:{{actor.image | filterURL}};" id="{{actor.id}}" ng-click="getProperties($index)" pr-index={{$index}} >
-                        {{actor.contents}}
+                    <div class="actor" draggable ng-repeat="actor in actors" style="top:{{actor.top}};left:{{actor.left}};height:{{actor.height}};width:{{actor.width}};z-index:{{actor.zindex}};background:{{actor.background}};background-image:{{actor.image | filterURL}};" id="{{actor.id}}" ng-click="getProperties($index)" pr-index={{$index}} data-ng-bind-html-unsafe="actor.contents">
                     </div>
                 </div>
             </div>

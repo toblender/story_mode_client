@@ -52,7 +52,7 @@ angular.module('ProgrammerRPGApp')
                         scope.actors.push(actorObj);
                     }else if(actor.id === 'text-box'){
                         actorObj = setActorProp(100,300);
-                        actorObj.contents='Text Box';
+                        actorObj.contents='Text Box <div data-ng-include="/builder/actors/views/textbox.html">Test box</div>';
                         scope.actors.push(actorObj);
                     }else if(actor.id === 'timer'){
                         actorObj = setActorProp(50,300);
@@ -75,7 +75,7 @@ angular.module('ProgrammerRPGApp')
                             style:actor.getAttribute('style'),
                             left:actor.style.left,
                             top:actor.style.top,
-                            contents:actor.innerText,
+                            contents:actor.innerHTML,
                             id:actor.id
                         }
                         scope.actors[actor.index]=actorObj;
