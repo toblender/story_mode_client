@@ -3,7 +3,13 @@
 
 angular.module('ProgrammerRPGApp')
   .controller('AdminController', function ($scope, Game) {
-     Game.gameRead({
+        //Shards
+        $scope.framesNavHTML = '/builder/frame/views/frames_nav.html';
+        $scope.framePropertiesHTML = '/builder/frame/views/frame_properties.html';
+        $scope.frameHTML = '/builder/frame/views/frame.html'; 
+        $scope.properties={};
+
+      Game.gameRead({
         actor:'game',
         action:'read',
         gameName:'newgame'
