@@ -56,8 +56,19 @@ angular.module('ProgrammerRPGApp')
     };
 
     $scope.$on('UPDATE_ACTORS',function(event,actors){
-        $scope.actors = actors;
-        console.log('actor updated');
+        //Filter by type
+        if(actors){
+            var filteredActors = [];
+            for(var i=0,j=actors.length;i<j;i++){
+                if(actors[i].type == 'properties'){
+                    $rootScope.$broadcast('UPDATE_FRAME_PROPERTIES',actors[i]);
+                }else{
+                    filteredActors.push(actors[i]);
+                }
+            }
+            $scope.actors = filteredActors;
+            console.log('actor updated');
+        }
     });
 
     var saveChanges = function(){

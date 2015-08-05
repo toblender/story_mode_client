@@ -81,6 +81,7 @@ angular.module('ProgrammerRPGApp')
                         scope.actors[actor.index]=actorObj;
                         //Update the current actor properties
                         $rootScope.$broadcast('UPDATE_ACTOR_PROPERTIES',actor.index);
+                        $rootScope.$broadcast('UPDATE_FRAME', scope.actors);
                         console.log(actor);
                     }
                     scope.$apply();

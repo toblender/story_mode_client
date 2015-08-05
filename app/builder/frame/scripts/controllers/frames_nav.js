@@ -34,6 +34,20 @@ angular.module('ProgrammerRPGApp')
         $rootScope.$broadcast('UPDATE_ACTORS',actors);
     }
 
+    function setPropertiesOfFrame(frame){
+        if('length' in frame){
+            for(var i=0,j=frame.length;i<j;i++){
+                if(frame[i].type=='properties'){
+                    frame[i]=$scope.properties;
+                    return frame;
+                }
+            }
+            frame.push($scope.properties);
+            return frame;
+        }
+        return [];
+    }
+
     $scope.updateFrame= function(currentFrame){
         Game.frameUpdate({
             actor:'frame',
@@ -41,7 +55,7 @@ angular.module('ProgrammerRPGApp')
             gameName:$scope.shortName,
             scene:$scope.currentScene,
             frame:currentFrame,
-            frameInfo:$scope.frames[currentFrame]
+            frameInfo:setPropertiesOfFrame($scope.frames[currentFrame])
             },
             function success (data, status, headers, config) {
                 console.log(currentFrame + " frame saved.");
@@ -138,8 +152,19 @@ angular.module('ProgrammerRPGApp')
         frame.properties = $scope.properties;
         return frame;
     }
+    //Get properties from frame array
+    function getPropertiesFromFrame(frame){
+        for(var i=0,j=actors.length;i<j;i++){
+            if(actors[i].type == 'properties'){
+                return actors[i];
+            }
+        }
+        return {background:'#444',type:'properties'};
+    }
     function loadPropertiesOfFrame(frame){
-        $scope.properties = frame.hasOwnProperty('properties') ? frame.properties:$scope.properties;
+        console.log('FRAME');
+        console.log(frame);
+        $scope.properties = getPropertiesFromFrame(frame);
         $rootScope.$broadcast('UPDATE_FRAME_PROPERTIES',$scope.properties);
         console.log('scope');
     }

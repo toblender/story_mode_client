@@ -2,10 +2,10 @@
 /*global $:false */
 
 angular.module('ProgrammerRPGApp')
-  .controller('FrameController', function ($scope, Game, $rootScope) {
-    console.log('FrameController');
+  .controller('FramePropertiesController', function ($scope, Game, $rootScope) {
+    console.log('FramePropertiesController');
     //FRAME specific function
-    $scope.properties={};
+    $scope.properties={background:'wtf'};
     $scope.$on('UPDATE_FRAME_PROPERTIES',function(event,properties){
         $scope.properties=properties;
         console.log('boundframe');

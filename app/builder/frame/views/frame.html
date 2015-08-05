@@ -1,4 +1,4 @@
-<div class="well background" data-ng-model="frame" style="background:{{frame.properties.background}}" droppable>
+<div class="well background" data-ng-model="frame" style="background:{{properties.background}}" droppable>
                     background
     <div class="actor" draggable ng-repeat="actor in actors" style="top:{{actor.top}};left:{{actor.left}};height:{{actor.height}};width:{{actor.width}};z-index:{{actor.zindex}};background:{{actor.background}};background-image:{{actor.image | filterURL}};" id="{{actor.id}}" ng-click="getProperties($index)" pr-index={{$index}} data-ng-bind-html-unsafe="actor.contents">
     </div>
